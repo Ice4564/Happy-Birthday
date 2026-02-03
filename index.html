@@ -100,6 +100,28 @@ textarea{resize:none;min-height:120px;}
   outline:3px solid #ff4081;
   background:#fff0f7;
 }
+
+/* เครดิต */
+.credit{
+  position:fixed;
+  bottom:10px;
+  right:15px;
+  font-size:0.9rem;
+  color:#c2185b;
+  background:rgba(255,255,255,0.6);
+  padding:0.3rem 0.7rem;
+  border-radius:15px;
+  box-shadow:0 0 10px rgba(255,64,129,0.4);
+  z-index:10000;
+}
+.credit a{
+  color:#c2185b;
+  text-decoration:none;
+  font-weight:bold;
+}
+.credit a:hover{
+  text-decoration:underline;
+}
 </style>
 </head>
 <body>
@@ -172,6 +194,11 @@ textarea{resize:none;min-height:120px;}
     <button class="start-button" onclick="sendReply()">ส่งข้อความ 💖</button>
     <div class="status-text" id="replyStatus"></div>
   </div>
+</div>
+
+<!-- เครดิต -->
+<div class="credit">
+  ทำโดย <a href="https://www.instagram.com/sky._.abc/" target="_blank">@sky._.abc</a>
 </div>
 
 <script>
