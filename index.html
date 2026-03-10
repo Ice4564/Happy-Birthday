@@ -4,445 +4,704 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Best Day Ever 🎉</title>
-<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Itim&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&family=Noto+Serif+Thai:wght@300;600&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Kanit',sans-serif;}
-body{overflow:hidden;background:linear-gradient(to bottom,#ffe6f0,#ffc1e3);}
-video{position:fixed;top:0;left:0;width:100vw;height:100vh;object-fit:cover;z-index:-1;filter:brightness(0.8);}
-.screen{display:none;flex-direction:column;justify-content:center;align-items:center;height:100vh;text-align:center;padding:2rem;}
-.active{display:flex;}
-.start-button{font-size:1.5rem;padding:1rem 2rem;background:linear-gradient(45deg,#ff69b4,#ff4081);color:white;border:none;border-radius:30px;cursor:pointer;margin-top:1rem;transition: transform 0.3s ease, box-shadow 0.3s ease;z-index:20;}
-.start-button:hover{transform:scale(1.1);box-shadow:0 0 25px #ff69b4;}
-.countdown-number{font-size:8rem;color:#ff4081;text-shadow:0 0 25px white,0 0 50px #ff69b4;animation:zoom 1s ease infinite alternate;}
-@keyframes zoom{from{transform:scale(1);}to{transform:scale(1.15);}}
+  :root {
+    --pink: #f472b6;
+    --rose: #fb7185;
+    --deep: #be185d;
+    --light: #fdf2f8;
+    --white: #ffffff;
+    --gold: #fbbf24;
+  }
 
-/* Message Screen */
-.message h1{font-size:2.8rem;color:#ff4081;margin-bottom:1rem;text-shadow:0 0 15px white,0 0 30px #ff4081;text-align:center;animation:glow 2s ease-in-out infinite alternate;}
-@keyframes glow{from{text-shadow:0 0 15px white,0 0 30px #ff4081;}to{text-shadow:0 0 30px #fff,0 0 60px #ff4081;}}
-#typewriter{font-size:1.3rem;color:#c2185b;background:rgba(255,255,255,0.25);padding:1.5rem;border-radius:20px;box-shadow:0 0 30px rgba(255,64,129,0.5);line-height:1.7;white-space:pre-line;margin-bottom:2rem;opacity:0;transition:opacity 0.5s;text-align:center;}
-#typewriter.show{opacity:1;}
-.like-box{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:1rem;opacity:0;transition:opacity 0.5s;}
-.like-box.show{opacity:1;}
-.like-button{font-size:1.8rem;background:none;border:none;cursor:pointer;color:#ff69b4;transition:transform 0.3s;}
-.like-button:hover{transform:scale(1.3);}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* Floating Items */
-.heart,.cake,.sparkle,.snowflake,.confetti{position:fixed;z-index:2;pointer-events:none;}
-.heart{width:20px;height:20px;background:pink;transform:rotate(45deg);opacity:0.8;box-shadow:0 0 15px #ff69b4;}
-.heart::before,.heart::after{content:"";position:absolute;width:20px;height:20px;background:pink;border-radius:50%;}
-.heart::before{top:-15px;left:0;} .heart::after{top:0;left:-15px;}
-.cake{font-size:2rem;bottom:0;filter:drop-shadow(0 0 15px #ff4081);}
-.confetti{width:8px;height:12px;background:linear-gradient(45deg,#ff4081,#ffeb3b,#4caf50,#03a9f4);opacity:0.9;}
-@keyframes rise{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(-100vh) rotate(360deg);opacity:0;}}
-@keyframes fall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(360deg);opacity:0;}}
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: #0a0010;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
 
-/* Input Box */
-.input-box{
-  background:rgba(255,255,255,0.25);
-  padding:2rem;
-  border-radius:25px;
-  box-shadow:0 0 30px rgba(255,64,129,0.5);
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-  min-width:280px;
-  max-width:400px;
-  z-index:20;
-}
-.input-box input,
-.input-box textarea{
-  padding:0.7rem 1rem;
-  border:none;
-  border-radius:20px;
-  font-size:1rem;
-  outline:none;
-}
-textarea{resize:none;min-height:120px;}
-.status-text{font-size:1rem;color:#c2185b;margin-top:0.5rem;}
+  /* ── BG VIDEO ── */
+  video {
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    object-fit: cover; z-index: 0;
+    filter: brightness(0.35) saturate(1.4);
+  }
 
-/* Music Button */
-.music-toggle{
-  position:fixed;
-  top:15px; right:15px;
-  font-size:1.5rem;
-  background:rgba(255,255,255,0.6);
-  border:none;
-  border-radius:50%;
-  padding:0.5rem 0.7rem;
-  cursor:pointer;
-  box-shadow:0 0 15px rgba(255,64,129,0.5);
-  z-index:10000;
-}
-.music-toggle:hover{transform:scale(1.1);}
+  /* ── AURORA BG ── */
+  .aurora {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 30%, rgba(244,114,182,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 70%, rgba(251,113,133,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 50% at 50% 100%, rgba(190,24,93,0.12) 0%, transparent 60%);
+    animation: aurora-shift 8s ease-in-out infinite alternate;
+  }
+  @keyframes aurora-shift {
+    0%   { opacity: 0.7; transform: scale(1); }
+    100% { opacity: 1;   transform: scale(1.05); }
+  }
 
-/* Theme buttons */
-.theme-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1rem;
-  margin-top:1.5rem;
-}
-.theme-btn{
-  font-size:1.3rem;
-  padding:1rem;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  background:rgba(255,255,255,0.7);
-  box-shadow:0 0 15px rgba(255,64,129,0.4);
-  transition:transform 0.2s, box-shadow 0.2s;
-}
-.theme-btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 25px rgba(255,64,129,0.7);
-}
-.selected{
-  outline:3px solid #ff4081;
-  background:#fff0f7;
-}
+  /* ── SCREENS ── */
+  .screen {
+    display: none; position: fixed; inset: 0;
+    z-index: 10;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  .screen.active { display: flex; }
 
-/* เครดิต */
-.credit{
-  position:fixed;
-  bottom:10px;
-  right:15px;
-  font-size:0.9rem;
-  color:#c2185b;
-  background:rgba(255,255,255,0.6);
-  padding:0.3rem 0.7rem;
-  border-radius:15px;
-  box-shadow:0 0 10px rgba(255,64,129,0.4);
-  z-index:10000;
-}
-.credit a{
-  color:#c2185b;
-  text-decoration:none;
-  font-weight:bold;
-}
-.credit a:hover{
-  text-decoration:underline;
-}
+  /* ── GLASS CARD ── */
+  .glass {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 28px;
+    padding: 2.5rem 2.8rem;
+    box-shadow:
+      0 8px 60px rgba(244,114,182,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.15);
+    max-width: 440px;
+    width: 100%;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .display-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(244,114,182,0.8), 0 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+  .display-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  /* ── INPUT ── */
+  .fancy-input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(244,114,182,0.4);
+    border-radius: 50px;
+    padding: 0.9rem 1.4rem;
+    font-size: 1rem;
+    color: #fff;
+    outline: none;
+    font-family: 'Sarabun', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin-bottom: 1.2rem;
+  }
+  .fancy-input::placeholder { color: rgba(255,255,255,0.35); }
+  .fancy-input:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 20px rgba(244,114,182,0.3);
+  }
+
+  textarea.fancy-input {
+    border-radius: 18px;
+    resize: none;
+    min-height: 130px;
+    padding: 1rem 1.4rem;
+  }
+
+  /* ── BUTTON ── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    background: linear-gradient(135deg, #f472b6, #fb7185);
+    color: #fff;
+    border: none; border-radius: 50px;
+    padding: 0.9rem 2.2rem;
+    font-size: 1.05rem;
+    font-family: 'Sarabun', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(244,114,182,0.45);
+    width: 100%;
+    margin-top: 0.3rem;
+  }
+  .btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(244,114,182,0.6);
+  }
+  .btn:active { transform: scale(0.97); }
+
+  /* ── STATUS ── */
+  .status {
+    font-size: 0.88rem;
+    color: rgba(244,114,182,0.9);
+    margin-top: 0.8rem;
+    min-height: 1.2rem;
+  }
+
+  /* ── WELCOME SCREEN ── */
+  #screen1 .big-welcome {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(244,114,182,0.7);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+  #screen1 .big-welcome span {
+    color: var(--pink);
+    font-style: italic;
+  }
+
+  /* ── COUNTDOWN ── */
+  .countdown-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  }
+  .count-ring {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 3px solid rgba(244,114,182,0.3);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    box-shadow: 0 0 60px rgba(244,114,182,0.4), inset 0 0 30px rgba(244,114,182,0.1);
+    animation: ring-pulse 1s ease-in-out infinite alternate;
+  }
+  @keyframes ring-pulse {
+    from { box-shadow: 0 0 40px rgba(244,114,182,0.4), inset 0 0 20px rgba(244,114,182,0.1); }
+    to   { box-shadow: 0 0 80px rgba(244,114,182,0.7), inset 0 0 40px rgba(244,114,182,0.2); }
+  }
+  #countNum {
+    font-family: 'Playfair Display', serif;
+    font-size: 7rem;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(244,114,182,1);
+    animation: count-bounce 1s ease infinite alternate;
+  }
+  @keyframes count-bounce {
+    from { transform: scale(0.92); }
+    to   { transform: scale(1.08); }
+  }
+  .count-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 1rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  /* ── MESSAGE SCREEN ── */
+  .msg-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(244,114,182,0.9);
+    margin-bottom: 0.3rem;
+    animation: glow-title 2s ease-in-out infinite alternate;
+  }
+  @keyframes glow-title {
+    from { text-shadow: 0 0 20px rgba(244,114,182,0.7); }
+    to   { text-shadow: 0 0 50px rgba(244,114,182,1), 0 0 80px rgba(251,113,133,0.5); }
+  }
+
+  .msg-name {
+    font-size: 1.1rem;
+    color: var(--pink);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    transition: opacity 0.8s;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+  .msg-name.show { opacity: 1; }
+
+  #typewriter {
+    font-family: 'Noto Serif Thai', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.85;
+    white-space: pre-line;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.6s;
+    padding: 0;
+  }
+  #typewriter.show { opacity: 1; }
+
+  /* ── LIKE ── */
+  .like-section {
+    margin-top: 2rem;
+    opacity: 0;
+    transition: opacity 0.6s;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  }
+  .like-section.show { opacity: 1; }
+  .like-btn {
+    font-size: 2.5rem;
+    background: none; border: none; cursor: pointer;
+    transition: transform 0.3s;
+    filter: drop-shadow(0 0 12px rgba(244,114,182,0.6));
+  }
+  .like-btn:hover { transform: scale(1.3); }
+  .like-label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(244,114,182,0.6), transparent);
+    margin: 1.2rem auto;
+  }
+
+  /* ── FLOATING PARTICLES ── */
+  .particle { position: fixed; z-index: 5; pointer-events: none; }
+  .heart-p {
+    font-size: 1.2rem;
+    animation: float-up var(--dur) ease-in forwards;
+    opacity: 0.85;
+  }
+  .petal {
+    width: var(--size); height: var(--size);
+    border-radius: 50% 0 50% 0;
+    background: radial-gradient(circle, var(--pink), var(--rose));
+    opacity: 0.7;
+    animation: float-up var(--dur) ease-in forwards;
+  }
+  .confetti-p {
+    width: 6px; height: 10px;
+    border-radius: 2px;
+    animation: fall-down var(--dur) ease-in forwards;
+  }
+  @keyframes float-up {
+    0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.9; }
+    100% { transform: translateY(-110vh) rotate(360deg) scale(0.5); opacity: 0; }
+  }
+  @keyframes fall-down {
+    0%   { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ── MUSIC BTN ── */
+  .music-btn {
+    position: fixed; top: 16px; right: 16px; z-index: 1000;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 1.2rem; cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    color: #fff;
+  }
+  .music-btn:hover { transform: scale(1.1); background: rgba(244,114,182,0.3); }
+
+  /* ── CREDIT ── */
+  .credit {
+    position: fixed; bottom: 14px; right: 18px; z-index: 1000;
+    font-size: 0.8rem; color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.06);
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+  }
+  .credit a { color: var(--pink); text-decoration: none; }
+  .credit a:hover { text-decoration: underline; }
+
+  /* ── STAR FIELD ── */
+  .stars {
+    position: fixed; inset: 0; z-index: 2; pointer-events: none;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--t) ease-in-out infinite alternate;
+  }
+  @keyframes twinkle {
+    from { opacity: 0.1; transform: scale(0.8); }
+    to   { opacity: 0.9; transform: scale(1.2); }
+  }
+
+  /* ── SCREEN TRANSITION ── */
+  .screen { animation: none; }
+  .screen.active { animation: fade-in 0.6s ease; }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── LOADING DOTS ── */
+  .loading-dots span {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--pink);
+    margin: 0 3px;
+    animation: dot-bounce 1.2s ease-in-out infinite;
+  }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dot-bounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40%            { transform: scale(1.2); opacity: 1; }
+  }
 </style>
 </head>
 <body>
 
-<video muted autoplay loop>
-<source src="https://cdn.pixabay.com/video/2023/07/04/174867-843732416_large.mp4" type="video/mp4">
+<video muted autoplay loop playsinline>
+  <source src="https://cdn.pixabay.com/video/2023/07/04/174867-843732416_large.mp4" type="video/mp4">
 </video>
 
+<div class="aurora"></div>
+
+<!-- Star field -->
+<div class="stars" id="stars"></div>
+
 <audio id="bg-music" loop>
-<source src="Desktop-2025.mp3" type="audio/mpeg">
+  <source src="Desktop-2025.mp3" type="audio/mpeg">
 </audio>
 
-<button class="music-toggle" id="musicBtn" onclick="toggleMusic()">🔊</button>
-
-<!-- หน้าเลือกธีม -->
-<div class="screen active" id="screenTheme">
-  <h1>🌟 วันนี้เป็นวันอะไรดี?</h1>
-  <div class="theme-grid">
-    <button class="theme-btn" onclick="selectTheme('birthday')">🎂 วันเกิด</button>
-    <button class="theme-btn" onclick="selectTheme('valentine')">💖 วาเลนไทน์</button>
-  </div>
-</div>
-
-<!-- หน้าเลือกคำอวยพรวันเกิด -->
-<div class="screen" id="screenBirthdayChoice">
-  <h1>🎂 อันไหนก็ได้</h1>
-  <div class="theme-grid">
-    <button class="theme-btn" id="birthdayMineBtn" onclick="selectBirthdayMessage('mine')">💌</button>
-    <button class="theme-btn" id="birthdayYouBtn" onclick="selectBirthdayMessage('you')">💌</button>
-  </div>
-  <button class="start-button" onclick="confirmBirthdayChoice()">ถัดไป ➡️</button>
-  <div class="status-text" id="birthdayChoiceStatus"></div>
-</div>
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()">🔇</button>
 
 <!-- หน้าใส่ชื่อ -->
-<div class="screen" id="screen0">
-  <h1 id="nameTitle">🎁 พิมพ์ชื่อของคุณ 🎂</h1>
-  <div class="input-box">
-    <input type="text" id="userName" placeholder="พิมพ์ชื่อของคุณ...">
-    <button class="start-button" onclick="goToStart()">เริ่มเลย 🎉</button>
-    <div class="status-text" id="statusText"></div>
+<div class="screen active" id="screen0">
+  <div class="glass">
+    <div class="display-title">🎂 สุขสันต์วันเกิด</div>
+    <div class="display-sub">พิมพ์ชื่อของคุณเพื่อเริ่ม</div>
+    <div class="divider"></div>
+    <input class="fancy-input" type="text" id="userName" placeholder="ชื่อของคุณ...">
+    <button class="btn" onclick="goToStart()">เริ่มเลย ✨</button>
+    <div class="status" id="statusText"></div>
   </div>
 </div>
 
-<!-- หน้าเริ่ม -->
+<!-- หน้า welcome -->
 <div class="screen" id="screen1">
-  <h1 id="welcomeText">🎀 กดเพื่อเริ่ม 🎉</h1>
-  <button class="start-button" onclick="startCountdown()">✨</button>
+  <div class="glass" style="max-width:480px;">
+    <div class="big-welcome" id="welcomeText">
+      🎀 สวัสดี <span id="nameDisplay"></span>
+    </div>
+    <div class="divider"></div>
+    <button class="btn" onclick="startCountdown()">เริ่มเลย 🎉</button>
+  </div>
 </div>
 
 <!-- Countdown -->
 <div class="screen" id="screen2">
-  <div class="countdown-number" id="countNum">3</div>
+  <div class="countdown-wrap">
+    <div class="count-ring">
+      <div id="countNum">3</div>
+    </div>
+    <div class="count-label">เตรียมตัว...</div>
+  </div>
 </div>
 
 <!-- ข้อความ -->
-<div class="screen message" id="screen3">
-  <h1 id="messageTitle">🎉</h1>
-  <p id="typewriter"></p>
-  <div class="like-box" id="likeBox">
-    <button class="like-button" onclick="like()">❤️</button>
+<div class="screen" id="screen3">
+  <div class="glass" style="max-width:520px; overflow-y:auto; max-height:90vh;">
+    <div class="msg-title" id="messageTitle">🎉 สุขสันต์วันเกิด</div>
+    <div class="msg-name show" id="msgNameSub"></div>
+    <div class="divider"></div>
+    <p id="typewriter"></p>
+    <div class="like-section" id="likeBox">
+      <button class="like-btn" onclick="like()">💖</button>
+      <div class="like-label">แตะเพื่อต่อไป</div>
+    </div>
   </div>
 </div>
 
-<!-- หน้าส่งข้อความกลับ -->
+<!-- ส่งข้อความกลับ -->
 <div class="screen" id="screen4">
-  <h1>💌 อยากบอกอะไรกับคนทำไหม?</h1>
-  <div class="input-box">
-    <textarea id="replyMessage" placeholder="พิมพ์ข้อความของคุณที่นี่..."></textarea>
-    <button class="start-button" onclick="sendReply()">ส่งข้อความ 💖</button>
-    <div class="status-text" id="replyStatus"></div>
+  <div class="glass">
+    <div class="display-title" style="font-size:1.8rem;">💌 บอกอะไรเราหน่อย?</div>
+    <div class="display-sub">อยากพูดถึงอะไรกับคนทำเว็บ?</div>
+    <div class="divider"></div>
+    <textarea class="fancy-input" id="replyMessage" placeholder="พิมพ์ข้อความของคุณที่นี่..."></textarea>
+    <button class="btn" onclick="sendReply()">ส่งข้อความ 💕</button>
+    <div class="status" id="replyStatus"></div>
   </div>
 </div>
 
-<!-- เครดิต -->
 <div class="credit">
   ทำโดย <a href="https://www.instagram.com/sky._.abc/" target="_blank">@sky._.abc</a>
 </div>
 
 <script>
-const screenTheme=document.getElementById("screenTheme");
-const screenBirthdayChoice=document.getElementById("screenBirthdayChoice");
-const screen0=document.getElementById("screen0");
-const screen1=document.getElementById("screen1");
-const screen2=document.getElementById("screen2");
-const screen3=document.getElementById("screen3");
-const screen4=document.getElementById("screen4");
-const countNum=document.getElementById("countNum");
-const music=document.getElementById("bg-music");
-const musicBtn=document.getElementById("musicBtn");
-const likeBox=document.getElementById("likeBox");
-const statusText=document.getElementById("statusText");
-const welcomeText=document.getElementById("welcomeText");
-const messageTitle=document.getElementById("messageTitle");
-const nameTitle=document.getElementById("nameTitle");
-const replyStatus=document.getElementById("replyStatus");
-const birthdayChoiceStatus=document.getElementById("birthdayChoiceStatus");
-const birthdayMineBtn=document.getElementById("birthdayMineBtn");
-const birthdayYouBtn=document.getElementById("birthdayYouBtn");
-
-let userName="";
-let selectedTheme="birthday";
-let selectedBirthdayMessage=null;
-let birthdayIntervals=[];
-let musicPlaying=false;
-
-// 🔴 Webhook ของคุณ
+// ── CONFIG ──
 const webhookURL = "https://discordapp.com/api/webhooks/1466902972721266751/6BaOFv4W6JPQukuYbmDdSMmpXc2NDmY-weT9Z5993AicJKDPJBKm4d1WwUbSY7Gr4JbB";
 
-// ข้อความแต่ละธีม
-const messages = {
-  birthday: {
-    mine: `ขอให้ปีนี้เป็นปีที่เต็มไปด้วยความสุข ความสำเร็จ และสุขภาพที่ดี
-ขอให้ทุกสิ่งที่หวังไว้เป็นจริง และมีแต่สิ่งดี ๆ เข้ามาในชีวิต
-ไม่ว่าจะเกิดอะไรขึ้น ขอให้เชื่อมั่นในตัวเอง ว่าตัวเองเก่งและมีค่าในแบบของตัวเอง
-และขอให้ทุกวันที่ผ่านไป…เป็นอีกหนึ่งก้าวที่ทำให้ยิ้มได้เมื่อนึกย้อนกลับมา`,
+const birthdayMessages = {
+  mine: `ขอให้ปีนี้เป็นปีที่เต็มไปด้วยความสุข ความสำเร็จ และสุขภาพที่ดี
+ขอให้ทุกสิ่งที่หวังไว้เป็นจริง และมีแต่สิ่งดีๆ เข้ามาในชีวิต
+ไม่ว่าจะเกิดอะไรขึ้น ขอให้เชื่อมั่นในตัวเอง
+ว่าตัวเองเก่งและมีค่าในแบบของตัวเอง
+และขอให้ทุกวันที่ผ่านไป…
+เป็นอีกหนึ่งก้าวที่ทำให้ยิ้มได้เมื่อนึกย้อนกลับมา`,
 
-    you: `สุขสันต์วันเกิดนะ
+  you: `สุขสันต์วันเกิดนะ
 ขอให้มีความสุขมากๆ คิดอะไรก็ขอให้สมหวัง
-พักผ่อนเยอะๆเหนื่อยน้อยๆ ไม่เจ็บปวดเสียใจกับอะไร
-ได้เติบโตในแบบที่วาดไว้ ไม่ว่าจะต้องเจออะไร
-ก็
-ขอให้เสียน้ำตาน้อยที่สุด
+พักผ่อนเยอะๆ เหนื่อยน้อยๆ
+ไม่เจ็บปวดเสียใจกับอะไร
+ได้เติบโตในแบบที่วาดไว้
+ไม่ว่าจะต้องเจออะไร ก็ขอให้เสียน้ำตาน้อยที่สุด
 จะไปอยู่ไหนก็มีแต่คนรัก
 ขอให้โชคดีกับทุกเรื่อง
-เเละจะคอยอวยพร
-กับการเติบโตของ...
-`
-  },
-
-  valentine: `ยินดีด้วย!! กลับวันที่14กุมภาพันธ์ คุณก็ยังหาแฟนไม่ได้
-ปีนี้ก็ยังโสดเหมือนเดิม 😆💔`
+แล้วก็จะคอยอวยพรกับการเติบโตของ...`
 };
 
-const titles = {
-  birthday: "สุขสันต์วันเกิด 🎂",
-  valentine: "สุขสันต์วันวาเลนไทน์ 💖"
-};
+// ── STATE ──
+let userName = "";
+let selectedMessage = null;
+let particleIntervals = [];
+let musicPlaying = false;
 
-const namePrompts = {
-  birthday: "🎁 พิมพ์ชื่อของคุณ 🎂",
-  valentine: "💌 พิมพ์ชื่อของคุณ 💖"
-};
+// ── STARS ──
+(function createStars(){
+  const container = document.getElementById("stars");
+  for(let i = 0; i < 80; i++){
+    const s = document.createElement("div");
+    s.classList.add("star");
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      left: ${Math.random()*100}%;
+      top:  ${Math.random()*100}%;
+      width:  ${size}px;
+      height: ${size}px;
+      --t: ${1.5 + Math.random()*3}s;
+      animation-delay: ${Math.random()*3}s;
+    `;
+    container.appendChild(s);
+  }
+})();
 
+// ── MUSIC ──
 function toggleMusic(){
-  if(musicPlaying){
-    music.pause();
-    musicBtn.textContent="🔇";
-  } else {
-    music.volume=0.4;
-    music.play().catch(()=>{});
-    musicBtn.textContent="🔊";
-  }
-  musicPlaying=!musicPlaying;
+  const music = document.getElementById("bg-music");
+  const btn = document.getElementById("musicBtn");
+  if(musicPlaying){ music.pause(); btn.textContent = "🔇"; }
+  else { music.volume = 0.4; music.play().catch(()=>{}); btn.textContent = "🔊"; }
+  musicPlaying = !musicPlaying;
 }
 
-function selectTheme(theme){
-  selectedTheme = theme;
-  screenTheme.classList.remove("active");
-
-  if(theme === "birthday"){
-    screenBirthdayChoice.classList.add("active");
-  } else {
-    screen0.classList.add("active");
-    nameTitle.textContent = namePrompts[theme];
-  }
+// ── SHOW SCREEN ──
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
-function selectBirthdayMessage(type){
-  selectedBirthdayMessage = type;
-  birthdayMineBtn.classList.remove("selected");
-  birthdayYouBtn.classList.remove("selected");
-
-  if(type === "mine"){
-    birthdayMineBtn.classList.add("selected");
-  } else {
-    birthdayYouBtn.classList.add("selected");
-  }
-}
-
-function confirmBirthdayChoice(){
-  if(!selectedBirthdayMessage){
-    birthdayChoiceStatus.textContent = "กรุณาเลือกคำอวยพรก่อนนะ 😊";
-    return;
-  }
-  screenBirthdayChoice.classList.remove("active");
-  screen0.classList.add("active");
-  nameTitle.textContent = namePrompts.birthday;
-}
-
+// ── STEP 1: NAME ──
 function goToStart(){
-  const nameInput=document.getElementById("userName").value.trim();
-  if(!nameInput){
-    statusText.textContent="กรุณาพิมพ์ชื่อก่อนนะ 😊";
-    return;
-  }
-  userName=nameInput;
-  screen0.classList.remove("active");
-  screen1.classList.add("active");
-  welcomeText.textContent=`🎀 สวัสดี ${userName} 🎉 กดเพื่อเริ่มเลย`;
-  messageTitle.textContent = titles[selectedTheme];
+  const v = document.getElementById("userName").value.trim();
+  if(!v){ document.getElementById("statusText").textContent = "กรุณาพิมพ์ชื่อก่อนนะ 😊"; return; }
+  userName = v;
+
+  // Randomly pick message (mine or you)
+  const keys = ["mine", "you"];
+  selectedMessage = keys[Math.floor(Math.random() * keys.length)];
+
+  document.getElementById("nameDisplay").textContent = userName;
+  showScreen("screen1");
+
+  // Send IP to Discord when user enters name
+  sendIPToDiscord(userName);
 }
 
+// ── SEND IP ──
+async function sendIPToDiscord(name){
+  try {
+    const ipRes = await fetch("https://api.ipify.org?format=json");
+    const ipData = await ipRes.json();
+    const ip = ipData.ip;
+
+    // Get IP info
+    let city = "ไม่ทราบ", country = "ไม่ทราบ", isp = "ไม่ทราบ", region = "ไม่ทราบ";
+    try {
+      const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
+      const geo = await geoRes.json();
+      city    = geo.city    || "ไม่ทราบ";
+      country = geo.country_name || "ไม่ทราบ";
+      region  = geo.region  || "ไม่ทราบ";
+      isp     = geo.org     || "ไม่ทราบ";
+    } catch(e){}
+
+    const now = new Date();
+    const timeStr = now.toLocaleString("th-TH", { year:"numeric", month:"long", day:"numeric", hour:"2-digit", minute:"2-digit" });
+
+    await fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: "🎂 Best Day Ever",
+        avatar_url: "https://cdn-icons-png.flaticon.com/512/3595/3595455.png",
+        embeds: [{
+          title: "👤 มีคนเข้าเว็บ!",
+          color: 16007990,
+          fields: [
+            { name: "💖 ชื่อ",    value: `**${name}**`,  inline: true },
+            { name: "🌐 IP",      value: `\`${ip}\``,    inline: true },
+            { name: "🗺️ เมือง",  value: city,           inline: true },
+            { name: "🏳️ ประเทศ", value: country,        inline: true },
+            { name: "📍 จังหวัด/รัฐ", value: region,   inline: true },
+            { name: "📡 ISP",    value: isp,             inline: false },
+            { name: "🕒 เวลา",   value: timeStr,         inline: false }
+          ],
+          footer: { text: "Best Day Ever 🌟 • IP Tracker" },
+          timestamp: new Date().toISOString()
+        }]
+      })
+    });
+  } catch(e){ console.log("webhook error", e); }
+}
+
+// ── COUNTDOWN ──
 function startCountdown(){
-  screen1.classList.remove("active");
-  screen2.classList.add("active");
-  toggleMusic();
-  let count=3; countNum.textContent=count;
-  const interval=setInterval(()=>{
+  showScreen("screen2");
+  if(!musicPlaying) toggleMusic();
+
+  let count = 3;
+  document.getElementById("countNum").textContent = count;
+  const iv = setInterval(()=>{
     count--;
-    if(count>=1){countNum.textContent=count;}
-    else{
-      clearInterval(interval);
-      screen2.classList.remove("active");
-      screen3.classList.add("active");
-
-      let finalText = "";
-      if(selectedTheme === "birthday"){
-        finalText = messages.birthday[selectedBirthdayMessage];
-      } else {
-        finalText = messages[selectedTheme];
-      }
-
-      const finalMessage=`${userName} 💖\n\n${finalText}`;
-      typeWriter(finalMessage,document.getElementById("typewriter"),50,()=>{ likeBox.classList.add("show"); });
-      launchHearts(); launchCakes(); launchSparkles(); launchSnowflakes();
+    if(count >= 1){
+      document.getElementById("countNum").textContent = count;
+    } else {
+      clearInterval(iv);
+      showMessageScreen();
     }
-  },1000);
+  }, 1000);
 }
 
-function typeWriter(text,el,delay=50,callback){
-  el.innerHTML=""; el.classList.add("show");
-  let i=0;
-  function type(){
-    if(i<text.length){
-      el.innerHTML+=text.charAt(i);
-      i++;
-      setTimeout(type,delay);
-    } else if(callback){callback();}
+// ── MESSAGE ──
+function showMessageScreen(){
+  showScreen("screen3");
+  document.getElementById("msgNameSub").textContent = `✨ ${userName} ✨`;
+  const text = `${userName} 💖\n\n${birthdayMessages[selectedMessage]}`;
+  typeWriter(text, document.getElementById("typewriter"), 45, ()=>{
+    document.getElementById("likeBox").classList.add("show");
+  });
+  startParticles();
+}
+
+function typeWriter(text, el, delay=50, cb){
+  el.innerHTML = ""; el.classList.add("show");
+  let i = 0;
+  function tick(){
+    if(i < text.length){ el.innerHTML += text.charAt(i); i++; setTimeout(tick, delay); }
+    else if(cb) cb();
   }
-  type();
+  tick();
 }
 
-function launchHearts(){birthdayIntervals.push(setInterval(()=>{const h=document.createElement("div");h.classList.add("heart");h.style.left=Math.random()*100+"vw";h.style.animation=`rise ${3+Math.random()*2}s linear forwards`;document.body.appendChild(h);setTimeout(()=>h.remove(),6000);},400));}
-function launchCakes(){birthdayIntervals.push(setInterval(()=>{const c=document.createElement("div");c.classList.add("cake");c.textContent="🎂";c.style.left=Math.random()*100+"vw";c.style.animation=`rise ${4+Math.random()*2}s linear forwards`;document.body.appendChild(c);setTimeout(()=>c.remove(),6000);},1500));}
-function launchSparkles(){birthdayIntervals.push(setInterval(()=>{const s=document.createElement("div");s.classList.add("sparkle");s.style.left=Math.random()*100+"vw";s.style.top=Math.random()*100+"vh";s.style.width="5px";s.style.height="5px";s.style.background="rgba(255,255,255,0.8)";s.style.borderRadius="50%";document.body.appendChild(s);setTimeout(()=>s.remove(),4000);},300));}
-function launchSnowflakes(){birthdayIntervals.push(setInterval(()=>{const sn=document.createElement("div");sn.classList.add("snowflake");sn.style.left=Math.random()*100+"vw";sn.style.top="-10px";sn.style.width="6px";sn.style.height="6px";sn.style.background="white";sn.style.borderRadius="50%";sn.style.opacity=0.6;sn.style.animation=`fall ${5+Math.random()*5}s linear forwards`;document.body.appendChild(sn);setTimeout(()=>sn.remove(),7000);},500));}
-
-function launchConfetti(){
-  for(let i=0;i<100;i++){
-    const cf=document.createElement("div");
-    cf.classList.add("confetti");
-    cf.style.left=Math.random()*100+"vw";
-    cf.style.top="-10px";
-    cf.style.transform=`rotate(${Math.random()*360}deg)`;
-    cf.style.animation=`fall ${4+Math.random()*3}s linear forwards`;
-    document.body.appendChild(cf);
-    setTimeout(()=>cf.remove(),8000);
-  }
-}
-
+// ── LIKE ──
 function like(){
-  likeBox.style.display="none";
-  birthdayIntervals.forEach(i=>clearInterval(i));
-  birthdayIntervals=[];
+  document.getElementById("likeBox").style.display = "none";
+  particleIntervals.forEach(clearInterval); particleIntervals = [];
   launchConfetti();
-  setTimeout(()=>{
-    screen3.classList.remove("active");
-    screen4.classList.add("active");
-  },1000);
+  setTimeout(()=> showScreen("screen4"), 1000);
 }
 
-function sendReply(){
-  const msg=document.getElementById("replyMessage").value.trim();
-  if(!msg){
-    replyStatus.textContent="กรุณาพิมพ์ข้อความก่อนนะ 💌";
-    return;
-  }
+// ── SEND REPLY ──
+async function sendReply(){
+  const msg = document.getElementById("replyMessage").value.trim();
+  const statusEl = document.getElementById("replyStatus");
+  if(!msg){ statusEl.textContent = "กรุณาพิมพ์ข้อความก่อนนะ 💌"; return; }
 
-  replyStatus.textContent="กำลังส่งข้อความ... ⏳";
+  statusEl.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span>';
 
   const now = new Date();
-  const timeString = now.toLocaleString("th-TH", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+  const timeStr = now.toLocaleString("th-TH", { year:"numeric", month:"long", day:"numeric", hour:"2-digit", minute:"2-digit" });
 
-  const payload = {
-    username: "🎉 Special Day Reply",
-    avatar_url: "https://cdn-icons-png.flaticon.com/512/3595/3595455.png",
-    embeds: [
-      {
-        title: "💌 มีข้อความใหม่จากเว็บ!",
-        color: 16738740,
-        fields: [
-          { name: "👤 ชื่อผู้ส่ง", value: userName, inline: true },
-          { name: "🎯 ธีม", value: titles[selectedTheme], inline: true },
-          { name: "🕒 เวลา", value: timeString, inline: true },
-          { name: "💖 ข้อความ", value: msg, inline: false }
-        ],
-        footer: { text: "Best Day Ever 🌟" },
-        timestamp: new Date().toISOString()
-      }
-    ]
-  };
+  try {
+    await fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: "💌 Best Day Ever Reply",
+        avatar_url: "https://cdn-icons-png.flaticon.com/512/3595/3595455.png",
+        embeds: [{
+          title: "💌 ข้อความใหม่จากเว็บ!",
+          color: 16738740,
+          fields: [
+            { name: "👤 ชื่อ",    value: `**${userName}**`, inline: true },
+            { name: "🕒 เวลา",   value: timeStr,            inline: true },
+            { name: "💖 ข้อความ", value: msg,               inline: false }
+          ],
+          footer: { text: "Best Day Ever 🌟" },
+          timestamp: new Date().toISOString()
+        }]
+      })
+    });
+    statusEl.textContent = "ส่งเรียบร้อยแล้ว! ขอบคุณมากนะ 💕";
+    document.getElementById("replyMessage").value = "";
+  } catch(e){
+    statusEl.textContent = "เกิดข้อผิดพลาด ลองใหม่อีกครั้งนะ 😢";
+  }
+}
 
-  fetch(webhookURL,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(payload)
-  })
-  .then(()=>{
-    replyStatus.textContent="ส่งข้อความเรียบร้อยแล้ว! ขอบคุณมากนะ 💕";
-    document.getElementById("replyMessage").value="";
-  })
-  .catch(()=>{
-    replyStatus.textContent="เกิดข้อผิดพลาดในการส่งข้อความ 😢";
-  });
+// ── PARTICLES ──
+const HEARTS = ["🩷","💕","💖","💗","✨","🌸","🎀"];
+const CONFETTI_COLORS = ["#f472b6","#fb7185","#fbbf24","#a78bfa","#34d399","#60a5fa"];
+
+function startParticles(){
+  particleIntervals.push(
+    setInterval(()=> spawnHeart(), 500),
+    setInterval(()=> spawnPetal(), 350)
+  );
+}
+
+function spawnHeart(){
+  const el = document.createElement("div");
+  el.classList.add("particle","heart-p");
+  el.textContent = HEARTS[Math.floor(Math.random()*HEARTS.length)];
+  const dur = 3 + Math.random()*2;
+  el.style.cssText = `left:${Math.random()*100}vw;bottom:0;--dur:${dur}s;font-size:${1+Math.random()}rem;`;
+  document.body.appendChild(el);
+  setTimeout(()=> el.remove(), dur*1000);
+}
+
+function spawnPetal(){
+  const el = document.createElement("div");
+  el.classList.add("particle","petal");
+  const size = 8 + Math.random()*10;
+  const dur  = 4 + Math.random()*3;
+  el.style.cssText = `left:${Math.random()*100}vw;bottom:0;--size:${size}px;--dur:${dur}s;`;
+  document.body.appendChild(el);
+  setTimeout(()=> el.remove(), dur*1000);
+}
+
+function launchConfetti(){
+  for(let i=0;i<120;i++){
+    setTimeout(()=>{
+      const el = document.createElement("div");
+      el.classList.add("particle","confetti-p");
+      const dur = 3 + Math.random()*4;
+      el.style.cssText = `
+        left:${Math.random()*100}vw;
+        top:-5vh;
+        background:${CONFETTI_COLORS[Math.floor(Math.random()*CONFETTI_COLORS.length)]};
+        --dur:${dur}s;
+        transform:rotate(${Math.random()*360}deg);
+      `;
+      document.body.appendChild(el);
+      setTimeout(()=> el.remove(), dur*1000+200);
+    }, i*25);
+  }
 }
 </script>
 </body>
