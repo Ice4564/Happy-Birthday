@@ -3,458 +3,438 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Best Day Ever 🎉</title>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&family=Noto+Serif+Thai:wght@300;600&display=swap" rel="stylesheet">
+<title>Best Day Ever</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Sarabun:wght@200;300;400&family=Noto+Serif+Thai:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --pink: #f472b6;
-    --rose: #fb7185;
-    --deep: #be185d;
-    --light: #fdf2f8;
-    --white: #ffffff;
-    --gold: #fbbf24;
-  }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --ink:    #0b0612;
+  --card:   rgba(18, 8, 28, 0.72);
+  --rose:   #c0607a;
+  --blush:  #e8a0b8;
+  --mauve:  #7a4060;
+  --gold:   #c8a060;
+  --dim:    rgba(255,255,255,0.38);
+  --dimmer: rgba(255,255,255,0.18);
+  --faint:  rgba(255,255,255,0.08);
+}
 
-  body {
-    font-family: 'Sarabun', sans-serif;
-    background: #0a0010;
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-  }
+html, body { height:100%; width:100%; overflow:hidden; }
 
-  /* ── BG VIDEO ── */
-  video {
-    position: fixed; top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    object-fit: cover; z-index: 0;
-    filter: brightness(0.35) saturate(1.4);
-  }
+body {
+  font-family: 'Sarabun', sans-serif;
+  background: var(--ink);
+  color: var(--dim);
+}
 
-  /* ── AURORA BG ── */
-  .aurora {
-    position: fixed; inset: 0; z-index: 1; pointer-events: none;
-    background:
-      radial-gradient(ellipse 80% 60% at 20% 30%, rgba(244,114,182,0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 80% 70%, rgba(251,113,133,0.15) 0%, transparent 60%),
-      radial-gradient(ellipse 100% 50% at 50% 100%, rgba(190,24,93,0.12) 0%, transparent 60%);
-    animation: aurora-shift 8s ease-in-out infinite alternate;
-  }
-  @keyframes aurora-shift {
-    0%   { opacity: 0.7; transform: scale(1); }
-    100% { opacity: 1;   transform: scale(1.05); }
-  }
+/* ─── VIDEO BG ─── */
+#bg-video {
+  position:fixed; inset:0; z-index:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  filter: brightness(0.12) saturate(1.2);
+}
 
-  /* ── SCREENS ── */
-  .screen {
-    display: none; position: fixed; inset: 0;
-    z-index: 10;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    text-align: center;
-  }
-  .screen.active { display: flex; }
+/* ─── AMBIENT LAYERS ─── */
+.ambient {
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:
+    radial-gradient(ellipse 90% 70% at 15% 25%,  rgba(100,20,60,0.35)  0%, transparent 60%),
+    radial-gradient(ellipse 70% 90% at 88% 75%,  rgba(80,15,50,0.28)   0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 105%, rgba(60,10,40,0.4)    0%, transparent 55%);
+  animation: amb 14s ease-in-out infinite alternate;
+}
+@keyframes amb {
+  from { opacity:.7; transform:scale(1); }
+  to   { opacity:1;  transform:scale(1.06); }
+}
 
-  /* ── GLASS CARD ── */
-  .glass {
-    background: rgba(255,255,255,0.07);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 28px;
-    padding: 2.5rem 2.8rem;
-    box-shadow:
-      0 8px 60px rgba(244,114,182,0.25),
-      inset 0 1px 0 rgba(255,255,255,0.15);
-    max-width: 440px;
-    width: 100%;
-  }
+/* grain */
+.grain {
+  position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='.08'/%3E%3C/svg%3E");
+}
 
-  /* ── TYPOGRAPHY ── */
-  .display-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.6rem;
-    font-weight: 700;
-    color: #fff;
-    text-shadow: 0 0 40px rgba(244,114,182,0.8), 0 2px 4px rgba(0,0,0,0.5);
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-    margin-bottom: 0.4rem;
-  }
-  .display-sub {
-    font-size: 1rem;
-    color: rgba(255,255,255,0.55);
-    margin-bottom: 2rem;
-    font-weight: 300;
-  }
+/* vignette */
+.vignette {
+  position:fixed; inset:0; z-index:2; pointer-events:none;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(5,0,12,0.85) 100%);
+}
 
-  /* ── INPUT ── */
-  .fancy-input {
-    width: 100%;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(244,114,182,0.4);
-    border-radius: 50px;
-    padding: 0.9rem 1.4rem;
-    font-size: 1rem;
-    color: #fff;
-    outline: none;
-    font-family: 'Sarabun', sans-serif;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    margin-bottom: 1.2rem;
-  }
-  .fancy-input::placeholder { color: rgba(255,255,255,0.35); }
-  .fancy-input:focus {
-    border-color: var(--pink);
-    box-shadow: 0 0 20px rgba(244,114,182,0.3);
-  }
+/* ─── STARS ─── */
+#stars { position:fixed; inset:0; z-index:2; pointer-events:none; overflow:hidden; }
+.s {
+  position:absolute; border-radius:50%; background:#fff;
+  animation: twink var(--t) ease-in-out infinite alternate;
+}
+@keyframes twink {
+  from { opacity:.04; transform:scale(.7); }
+  to   { opacity:.55; transform:scale(1.2); }
+}
 
-  textarea.fancy-input {
-    border-radius: 18px;
-    resize: none;
-    min-height: 130px;
-    padding: 1rem 1.4rem;
-  }
+/* ─── SCREENS ─── */
+.screen {
+  display:none; position:fixed; inset:0; z-index:10;
+  flex-direction:column; align-items:center; justify-content:center;
+  padding:1.5rem;
+}
+.screen.active { display:flex; animation: fadeUp .65s cubic-bezier(.22,1,.36,1) both; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px) scale(.98); }
+  to   { opacity:1; transform:translateY(0)    scale(1);   }
+}
 
-  /* ── BUTTON ── */
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    background: linear-gradient(135deg, #f472b6, #fb7185);
-    color: #fff;
-    border: none; border-radius: 50px;
-    padding: 0.9rem 2.2rem;
-    font-size: 1.05rem;
-    font-family: 'Sarabun', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    letter-spacing: 0.3px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(244,114,182,0.45);
-    width: 100%;
-    margin-top: 0.3rem;
-  }
-  .btn:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 30px rgba(244,114,182,0.6);
-  }
-  .btn:active { transform: scale(0.97); }
+/* ─── CARD ─── */
+.card {
+  background: var(--card);
+  backdrop-filter: blur(40px) saturate(140%);
+  -webkit-backdrop-filter: blur(40px) saturate(140%);
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 3rem 3.2rem 2.8rem;
+  width: 100%; max-width: 440px;
+  text-align: center;
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(180,80,120,0.06),
+    0 30px 90px rgba(0,0,0,0.7),
+    0 8px 30px  rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
 
-  /* ── STATUS ── */
-  .status {
-    font-size: 0.88rem;
-    color: rgba(244,114,182,0.9);
-    margin-top: 0.8rem;
-    min-height: 1.2rem;
-  }
+/* top shimmer line */
+.card::before {
+  content:'';
+  position:absolute; top:0; left:15%; right:15%; height:1px;
+  background: linear-gradient(90deg, transparent, rgba(180,100,130,0.25), rgba(160,120,70,0.18), transparent);
+  border-radius: 50%;
+}
 
-  /* ── WELCOME SCREEN ── */
-  #screen1 .big-welcome {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.9rem;
-    color: #fff;
-    text-shadow: 0 0 30px rgba(244,114,182,0.7);
-    margin-bottom: 2rem;
-    line-height: 1.5;
-  }
-  #screen1 .big-welcome span {
-    color: var(--pink);
-    font-style: italic;
-  }
+/* ─── TYPOGRAPHY ─── */
+.eyebrow {
+  font-size: .72rem; font-weight:300;
+  letter-spacing: .35em; text-transform:uppercase;
+  color: rgba(180,110,140,0.5);
+  margin-bottom: .9rem;
+}
 
-  /* ── COUNTDOWN ── */
-  .countdown-wrap {
-    display: flex; flex-direction: column; align-items: center; gap: 1rem;
-  }
-  .count-ring {
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    border: 3px solid rgba(244,114,182,0.3);
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    box-shadow: 0 0 60px rgba(244,114,182,0.4), inset 0 0 30px rgba(244,114,182,0.1);
-    animation: ring-pulse 1s ease-in-out infinite alternate;
-  }
-  @keyframes ring-pulse {
-    from { box-shadow: 0 0 40px rgba(244,114,182,0.4), inset 0 0 20px rgba(244,114,182,0.1); }
-    to   { box-shadow: 0 0 80px rgba(244,114,182,0.7), inset 0 0 40px rgba(244,114,182,0.2); }
-  }
-  #countNum {
-    font-family: 'Playfair Display', serif;
-    font-size: 7rem;
-    color: #fff;
-    text-shadow: 0 0 40px rgba(244,114,182,1);
-    animation: count-bounce 1s ease infinite alternate;
-  }
-  @keyframes count-bounce {
-    from { transform: scale(0.92); }
-    to   { transform: scale(1.08); }
-  }
-  .count-label {
-    color: rgba(255,255,255,0.5);
-    font-size: 1rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-  }
+.heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.9rem; font-weight:300; line-height:1.15;
+  color: rgba(230,200,215,0.75);
+  letter-spacing: -.3px;
+  margin-bottom: .4rem;
+}
+.heading em {
+  font-style:italic; font-weight:300;
+  color: rgba(195,145,165,0.7);
+}
 
-  /* ── MESSAGE SCREEN ── */
-  .msg-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.4rem;
-    color: #fff;
-    text-shadow: 0 0 40px rgba(244,114,182,0.9);
-    margin-bottom: 0.3rem;
-    animation: glow-title 2s ease-in-out infinite alternate;
-  }
-  @keyframes glow-title {
-    from { text-shadow: 0 0 20px rgba(244,114,182,0.7); }
-    to   { text-shadow: 0 0 50px rgba(244,114,182,1), 0 0 80px rgba(251,113,133,0.5); }
-  }
+.caption {
+  font-size: .82rem; font-weight:200;
+  color: rgba(255,255,255,0.22);
+  letter-spacing: .15em;
+  margin-bottom: 2.2rem;
+}
 
-  .msg-name {
-    font-size: 1.1rem;
-    color: var(--pink);
-    margin-bottom: 1.8rem;
-    opacity: 0;
-    transition: opacity 0.8s;
-    font-weight: 300;
-    letter-spacing: 1px;
-  }
-  .msg-name.show { opacity: 1; }
+/* ─── DIVIDER ─── */
+.rule {
+  display:flex; align-items:center; gap:10px;
+  margin: 0 auto 2rem; width:70%;
+}
+.rule::before, .rule::after {
+  content:''; flex:1; height:1px;
+  background: linear-gradient(90deg, transparent, rgba(160,80,110,0.25));
+}
+.rule::after { background: linear-gradient(270deg, transparent, rgba(160,80,110,0.25)); }
+.rule span { font-size:.6rem; color:rgba(160,100,120,0.35); }
 
-  #typewriter {
-    font-family: 'Noto Serif Thai', serif;
-    font-size: 1.1rem;
-    color: rgba(255,255,255,0.9);
-    line-height: 1.85;
-    white-space: pre-line;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.6s;
-    padding: 0;
-  }
-  #typewriter.show { opacity: 1; }
+/* ─── INPUT ─── */
+.inp {
+  width:100%;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(160,80,110,0.2);
+  border-radius: 14px;
+  padding: .95rem 1.4rem;
+  font-size: .95rem;
+  color: rgba(255,255,255,0.65);
+  outline:none;
+  font-family: 'Sarabun', sans-serif; font-weight:300;
+  transition: all .3s;
+  margin-bottom: 1rem;
+}
+.inp::placeholder { color: rgba(255,255,255,0.18); font-weight:200; }
+.inp:focus {
+  border-color: rgba(170,80,110,0.45);
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 0 3px rgba(150,60,90,0.1), 0 0 24px rgba(150,60,90,0.08);
+  color: rgba(255,255,255,0.75);
+}
+textarea.inp { border-radius:14px; resize:none; min-height:120px; line-height:1.7; }
 
-  /* ── LIKE ── */
-  .like-section {
-    margin-top: 2rem;
-    opacity: 0;
-    transition: opacity 0.6s;
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-  }
-  .like-section.show { opacity: 1; }
-  .like-btn {
-    font-size: 2.5rem;
-    background: none; border: none; cursor: pointer;
-    transition: transform 0.3s;
-    filter: drop-shadow(0 0 12px rgba(244,114,182,0.6));
-  }
-  .like-btn:hover { transform: scale(1.3); }
-  .like-label {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.45);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
+/* ─── BUTTON ─── */
+.btn {
+  width:100%; margin-top:.4rem;
+  padding: .95rem 2rem;
+  border:none; border-radius:14px; cursor:pointer;
+  font-family:'Sarabun',sans-serif; font-size:.95rem; font-weight:400;
+  letter-spacing:.08em;
+  background: linear-gradient(135deg, rgba(140,55,85,0.9), rgba(160,75,105,0.85));
+  color: rgba(255,220,235,0.82);
+  box-shadow: 0 2px 20px rgba(120,40,70,0.35), inset 0 1px 0 rgba(255,255,255,0.07);
+  transition: all .3s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(155,65,95,0.95), rgba(175,85,115,0.9));
+  box-shadow: 0 6px 30px rgba(130,45,75,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+  color: rgba(255,225,240,0.9);
+}
+.btn:active { transform:scale(.98); }
 
-  /* ── DIVIDER ── */
-  .divider {
-    width: 60px; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(244,114,182,0.6), transparent);
-    margin: 1.2rem auto;
-  }
+/* ─── STATUS ─── */
+.status {
+  margin-top:.7rem; min-height:1.1rem;
+  font-size:.8rem; font-weight:200;
+  color: rgba(180,100,130,0.55);
+}
 
-  /* ── FLOATING PARTICLES ── */
-  .particle { position: fixed; z-index: 5; pointer-events: none; }
-  .heart-p {
-    font-size: 1.2rem;
-    animation: float-up var(--dur) ease-in forwards;
-    opacity: 0.85;
-  }
-  .petal {
-    width: var(--size); height: var(--size);
-    border-radius: 50% 0 50% 0;
-    background: radial-gradient(circle, var(--pink), var(--rose));
-    opacity: 0.7;
-    animation: float-up var(--dur) ease-in forwards;
-  }
-  .confetti-p {
-    width: 6px; height: 10px;
-    border-radius: 2px;
-    animation: fall-down var(--dur) ease-in forwards;
-  }
-  @keyframes float-up {
-    0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.9; }
-    100% { transform: translateY(-110vh) rotate(360deg) scale(0.5); opacity: 0; }
-  }
-  @keyframes fall-down {
-    0%   { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
+/* ─── SCREEN 0 specific ─── */
+#s0 .heading { font-size:3.2rem; }
 
-  /* ── MUSIC BTN ── */
-  .music-btn {
-    position: fixed; top: 16px; right: 16px; z-index: 1000;
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
-    font-size: 1.2rem; cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
-    color: #fff;
-  }
-  .music-btn:hover { transform: scale(1.1); background: rgba(244,114,182,0.3); }
+/* ─── SCREEN 1 welcome ─── */
+#s1 .card { max-width:460px; }
+.welcome-line {
+  font-family:'Cormorant Garamond',serif;
+  font-size:.95rem; font-weight:300; font-style:italic;
+  color:rgba(180,110,140,0.45);
+  letter-spacing:.2em; margin-bottom:.5rem;
+}
+.welcome-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.6rem; font-weight:300;
+  color:rgba(225,190,210,0.72);
+  letter-spacing:-.2px; line-height:1.2;
+  margin-bottom:.3rem;
+}
+.welcome-sub {
+  font-size:.78rem; font-weight:200;
+  color:rgba(255,255,255,0.18);
+  letter-spacing:.25em; text-transform:uppercase;
+  margin-bottom:2rem;
+}
 
-  /* ── CREDIT ── */
-  .credit {
-    position: fixed; bottom: 14px; right: 18px; z-index: 1000;
-    font-size: 0.8rem; color: rgba(255,255,255,0.4);
-    background: rgba(255,255,255,0.06);
-    padding: 0.3rem 0.9rem;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-  }
-  .credit a { color: var(--pink); text-decoration: none; }
-  .credit a:hover { text-decoration: underline; }
+/* ─── COUNTDOWN ─── */
+#s2 { background:transparent; }
+.cd-wrap { display:flex;flex-direction:column;align-items:center;gap:1.4rem; }
+.cd-ring-wrap { position:relative; width:180px; height:180px; }
+.cd-svg { position:absolute;inset:0; animation:spin 4s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg);} }
+.cd-face {
+  position:absolute; inset:10px; border-radius:50%;
+  background:rgba(15,5,25,0.8);
+  backdrop-filter:blur(20px);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 0 50px rgba(140,50,90,0.12);
+}
+#cd-n {
+  font-family:'Cormorant Garamond',serif;
+  font-size:7.5rem; font-weight:300; line-height:1;
+  color:rgba(210,170,190,0.8);
+  text-shadow: 0 0 60px rgba(180,80,120,0.5);
+  animation:cdpop .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes cdpop { from{transform:scale(.4);opacity:0;} to{transform:scale(1);opacity:1;} }
+.cd-label {
+  font-size:.72rem; font-weight:200;
+  color:rgba(255,255,255,0.2);
+  letter-spacing:.4em; text-transform:uppercase;
+}
 
-  /* ── STAR FIELD ── */
-  .stars {
-    position: fixed; inset: 0; z-index: 2; pointer-events: none;
-    overflow: hidden;
-  }
-  .star {
-    position: absolute;
-    background: #fff;
-    border-radius: 50%;
-    animation: twinkle var(--t) ease-in-out infinite alternate;
-  }
-  @keyframes twinkle {
-    from { opacity: 0.1; transform: scale(0.8); }
-    to   { opacity: 0.9; transform: scale(1.2); }
-  }
+/* ─── MESSAGE ─── */
+#s3 .card { max-width:520px; overflow-y:auto; max-height:90vh; }
+.msg-hl {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.3rem; font-weight:300; font-style:italic;
+  color:rgba(215,175,195,0.7);
+  margin-bottom:.25rem;
+  animation: glow 3s ease-in-out infinite alternate;
+}
+@keyframes glow {
+  from { text-shadow:0 0 20px rgba(160,70,100,0.3); }
+  to   { text-shadow:0 0 50px rgba(160,70,100,0.6), 0 0 80px rgba(160,70,100,0.2); }
+}
+.msg-who {
+  font-size:.75rem; font-weight:200;
+  color:rgba(170,100,130,0.45);
+  letter-spacing:.3em; text-transform:uppercase;
+  margin-bottom:1.8rem;
+  opacity:0; transition:opacity .8s;
+}
+.msg-who.show{opacity:1;}
+#tw {
+  font-family:'Noto Serif Thai',serif;
+  font-size:1rem; font-weight:300;
+  color:rgba(220,195,210,0.62);
+  line-height:2.1; white-space:pre-line;
+  opacity:0; transition:opacity .6s;
+}
+#tw.show{opacity:1;}
 
-  /* ── SCREEN TRANSITION ── */
-  .screen { animation: none; }
-  .screen.active { animation: fade-in 0.6s ease; }
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+/* heart */
+.like-box {
+  margin-top:2rem; opacity:0; transition:opacity .6s;
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+}
+.like-box.show{opacity:1;}
+.like-btn {
+  font-size:2.6rem; background:none; border:none; cursor:pointer;
+  animation:hb 2s ease-in-out infinite;
+  filter:drop-shadow(0 0 10px rgba(180,70,110,0.4));
+}
+@keyframes hb {
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.12); filter:drop-shadow(0 0 18px rgba(180,70,110,0.65));}
+}
+.like-btn:hover{animation:none;transform:scale(1.3);}
+.like-hint{font-size:.7rem;font-weight:200;color:rgba(255,255,255,0.18);letter-spacing:.25em;text-transform:uppercase;}
 
-  /* ── LOADING DOTS ── */
-  .loading-dots span {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--pink);
-    margin: 0 3px;
-    animation: dot-bounce 1.2s ease-in-out infinite;
-  }
-  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes dot-bounce {
-    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-    40%            { transform: scale(1.2); opacity: 1; }
-  }
+/* ─── PARTICLES ─── */
+.p{position:fixed;z-index:5;pointer-events:none;}
+.ph{animation:pu var(--d) ease-in forwards;opacity:.7;}
+.pp{border-radius:50% 0 50% 0;opacity:.4;animation:pu var(--d) ease-in forwards;}
+.pc{border-radius:2px;animation:pd var(--d) ease-in forwards;}
+@keyframes pu{0%{transform:translateY(0) rotate(0) scale(1);opacity:.8;}100%{transform:translateY(-110vh) rotate(400deg) scale(.2);opacity:0;}}
+@keyframes pd{0%{transform:translateY(-5vh) rotate(0);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+/* ─── MUSIC / CREDIT ─── */
+#mbtn {
+  position:fixed;top:16px;right:16px;z-index:1000;
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+  color:rgba(255,255,255,0.4); font-size:1rem; cursor:pointer;
+  transition:all .3s;
+}
+#mbtn:hover{background:rgba(180,70,110,0.2);color:rgba(255,255,255,0.7);transform:scale(1.1);}
+
+.credit {
+  position:fixed;bottom:14px;right:16px;z-index:1000;
+  font-size:.72rem;font-weight:200;
+  color:rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.03);
+  padding:.25rem .8rem; border-radius:20px;
+  border:1px solid rgba(255,255,255,0.06);
+  backdrop-filter:blur(10px);
+}
+.credit a{color:rgba(180,100,130,0.6);text-decoration:none;}
+.credit a:hover{color:rgba(200,120,150,0.85);}
+
+/* loading */
+.dots span{display:inline-block;width:4px;height:4px;border-radius:50%;background:rgba(180,80,120,0.6);margin:0 2px;animation:db 1.2s ease-in-out infinite;}
+.dots span:nth-child(2){animation-delay:.2s;}
+.dots span:nth-child(3){animation-delay:.4s;}
+@keyframes db{0%,80%,100%{transform:scale(.5);opacity:.3;}40%{transform:scale(1.2);opacity:1;}}
 </style>
 </head>
 <body>
 
-<video muted autoplay loop playsinline>
+<video id="bg-video" muted autoplay loop playsinline>
   <source src="https://cdn.pixabay.com/video/2023/07/04/174867-843732416_large.mp4" type="video/mp4">
 </video>
+<div class="ambient"></div>
+<div class="grain"></div>
+<div class="vignette"></div>
+<div id="stars"></div>
 
-<div class="aurora"></div>
+<audio id="bgm" loop><source src="Desktop-2025.mp3" type="audio/mpeg"></audio>
+<button id="mbtn" onclick="toggleMusic()">🔇</button>
 
-<!-- Star field -->
-<div class="stars" id="stars"></div>
-
-<audio id="bg-music" loop>
-  <source src="Desktop-2025.mp3" type="audio/mpeg">
-</audio>
-
-<button class="music-btn" id="musicBtn" onclick="toggleMusic()">🔇</button>
-
-<!-- หน้าใส่ชื่อ -->
-<div class="screen active" id="screen0">
-  <div class="glass">
-    <div class="display-title">🎂 สุขสันต์วันเกิด</div>
-    <div class="display-sub">พิมพ์ชื่อของคุณเพื่อเริ่ม</div>
-    <div class="divider"></div>
-    <input class="fancy-input" type="text" id="userName" placeholder="ชื่อของคุณ...">
-    <button class="btn" onclick="goToStart()">เริ่มเลย ✨</button>
-    <div class="status" id="statusText"></div>
+<!-- S0: ใส่ชื่อ -->
+<div class="screen active" id="s0">
+  <div class="card">
+    <div class="eyebrow">Best Day Ever</div>
+    <div class="heading">🎂 สุขสันต์<br><em>วันเกิด</em></div>
+    <div class="caption">เขียนชื่อของคุณเพื่อเริ่ม</div>
+    <div class="rule"><span>✦</span></div>
+    <input class="inp" id="uname" type="text" placeholder="ชื่อของคุณ..." autocomplete="off">
+    <button class="btn" onclick="goStart()">เริ่มเลย &nbsp;✨</button>
+    <div class="status" id="st0"></div>
   </div>
 </div>
 
-<!-- หน้า welcome -->
-<div class="screen" id="screen1">
-  <div class="glass" style="max-width:480px;">
-    <div class="big-welcome" id="welcomeText">
-      🎀 สวัสดี <span id="nameDisplay"></span>
+<!-- S1: Welcome -->
+<div class="screen" id="s1">
+  <div class="card">
+    <div class="welcome-line">สวัสดี</div>
+    <div class="welcome-name" id="wname"></div>
+    <div class="welcome-sub">มีบางอย่างรอคุณอยู่</div>
+    <div class="rule"><span>♡</span></div>
+    <button class="btn" onclick="startCD()">เปิดเลย &nbsp;🎉</button>
+  </div>
+</div>
+
+<!-- S2: Countdown -->
+<div class="screen" id="s2">
+  <div class="cd-wrap">
+    <div class="cd-ring-wrap">
+      <svg class="cd-svg" viewBox="0 0 180 180" fill="none">
+        <circle cx="90" cy="90" r="84" stroke="url(#cg)" stroke-width="1" stroke-dasharray="5 9" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="cg" x1="0" y1="0" x2="180" y2="180">
+            <stop offset="0%"   stop-color="rgba(160,70,100,0.6)"/>
+            <stop offset="50%"  stop-color="rgba(160,120,70,0.4)"/>
+            <stop offset="100%" stop-color="rgba(160,70,100,0.6)"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="cd-face"><div id="cd-n">3</div></div>
     </div>
-    <div class="divider"></div>
-    <button class="btn" onclick="startCountdown()">เริ่มเลย 🎉</button>
+    <div class="cd-label">✦ &nbsp; เตรียมตัว &nbsp; ✦</div>
   </div>
 </div>
 
-<!-- Countdown -->
-<div class="screen" id="screen2">
-  <div class="countdown-wrap">
-    <div class="count-ring">
-      <div id="countNum">3</div>
-    </div>
-    <div class="count-label">เตรียมตัว...</div>
-  </div>
-</div>
-
-<!-- ข้อความ -->
-<div class="screen" id="screen3">
-  <div class="glass" style="max-width:520px; overflow-y:auto; max-height:90vh;">
-    <div class="msg-title" id="messageTitle">🎉 สุขสันต์วันเกิด</div>
-    <div class="msg-name show" id="msgNameSub"></div>
-    <div class="divider"></div>
-    <p id="typewriter"></p>
-    <div class="like-section" id="likeBox">
-      <button class="like-btn" onclick="like()">💖</button>
-      <div class="like-label">แตะเพื่อต่อไป</div>
+<!-- S3: Message -->
+<div class="screen" id="s3">
+  <div class="card">
+    <div class="msg-hl">🎉 สุขสันต์วันเกิด</div>
+    <div class="msg-who show" id="mwho"></div>
+    <div class="rule"><span>✦</span></div>
+    <p id="tw"></p>
+    <div class="like-box" id="lbox">
+      <button class="like-btn" onclick="doLike()">💖</button>
+      <div class="like-hint">แตะเพื่อต่อไป</div>
     </div>
   </div>
 </div>
 
-<!-- ส่งข้อความกลับ -->
-<div class="screen" id="screen4">
-  <div class="glass">
-    <div class="display-title" style="font-size:1.8rem;">💌 บอกอะไรเราหน่อย?</div>
-    <div class="display-sub">อยากพูดถึงอะไรกับคนทำเว็บ?</div>
-    <div class="divider"></div>
-    <textarea class="fancy-input" id="replyMessage" placeholder="พิมพ์ข้อความของคุณที่นี่..."></textarea>
-    <button class="btn" onclick="sendReply()">ส่งข้อความ 💕</button>
-    <div class="status" id="replyStatus"></div>
+<!-- S4: Reply -->
+<div class="screen" id="s4">
+  <div class="card">
+    <div class="eyebrow">ส่งข้อความ</div>
+    <div class="heading" style="font-size:2.1rem;">💌 บอกอะไรเราหน่อย?</div>
+    <div class="caption">อยากพูดอะไรกับคนทำเว็บ?</div>
+    <div class="rule"><span>♡</span></div>
+    <textarea class="inp" id="rmsg" placeholder="พิมพ์ข้อความของคุณที่นี่..."></textarea>
+    <button class="btn" onclick="sendReply()">ส่งข้อความ &nbsp;💕</button>
+    <div class="status" id="rst"></div>
   </div>
 </div>
 
-<div class="credit">
-  ทำโดย <a href="https://www.instagram.com/sky._.abc/" target="_blank">@sky._.abc</a>
-</div>
+<div class="credit">ทำโดย <a href="https://www.instagram.com/sky._.abc/" target="_blank">@sky._.abc</a></div>
 
 <script>
-// ── CONFIG ──
-const webhookURL = "https://discordapp.com/api/webhooks/1466902972721266751/6BaOFv4W6JPQukuYbmDdSMmpXc2NDmY-weT9Z5993AicJKDPJBKm4d1WwUbSY7Gr4JbB";
-
-const birthdayMessages = {
-  mine: `ขอให้ปีนี้เป็นปีที่เต็มไปด้วยความสุข ความสำเร็จ และสุขภาพที่ดี
+const HOOK = "https://discordapp.com/api/webhooks/1466902972721266751/6BaOFv4W6JPQukuYbmDdSMmpXc2NDmY-weT9Z5993AicJKDPJBKm4d1WwUbSY7Gr4JbB";
+const MSGS = {
+  mine:`ขอให้ปีนี้เป็นปีที่เต็มไปด้วยความสุข ความสำเร็จ และสุขภาพที่ดี
 ขอให้ทุกสิ่งที่หวังไว้เป็นจริง และมีแต่สิ่งดีๆ เข้ามาในชีวิต
 ไม่ว่าจะเกิดอะไรขึ้น ขอให้เชื่อมั่นในตัวเอง
 ว่าตัวเองเก่งและมีค่าในแบบของตัวเอง
 และขอให้ทุกวันที่ผ่านไป…
 เป็นอีกหนึ่งก้าวที่ทำให้ยิ้มได้เมื่อนึกย้อนกลับมา`,
-
-  you: `สุขสันต์วันเกิดนะ
+  you:`สุขสันต์วันเกิดนะ
 ขอให้มีความสุขมากๆ คิดอะไรก็ขอให้สมหวัง
 พักผ่อนเยอะๆ เหนื่อยน้อยๆ
 ไม่เจ็บปวดเสียใจกับอะไร
@@ -465,243 +445,131 @@ const birthdayMessages = {
 แล้วก็จะคอยอวยพรกับการเติบโตของ...`
 };
 
-// ── STATE ──
-let userName = "";
-let selectedMessage = null;
-let particleIntervals = [];
-let musicPlaying = false;
+let uname='', msg=null, piv=[], music=false;
 
-// ── STARS ──
-(function createStars(){
-  const container = document.getElementById("stars");
-  for(let i = 0; i < 80; i++){
-    const s = document.createElement("div");
-    s.classList.add("star");
-    const size = Math.random() * 2.5 + 0.5;
-    s.style.cssText = `
-      left: ${Math.random()*100}%;
-      top:  ${Math.random()*100}%;
-      width:  ${size}px;
-      height: ${size}px;
-      --t: ${1.5 + Math.random()*3}s;
-      animation-delay: ${Math.random()*3}s;
-    `;
-    container.appendChild(s);
+/* STARS */
+!function(){
+  const c=document.getElementById('stars');
+  for(let i=0;i<110;i++){
+    const s=document.createElement('div'); s.className='s';
+    const z=Math.random()*2+.3;
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;--t:${1.8+Math.random()*4}s;animation-delay:${Math.random()*5}s;opacity:0;`;
+    c.appendChild(s);
   }
-})();
+}();
 
-// ── MUSIC ──
+/* MUSIC */
 function toggleMusic(){
-  const music = document.getElementById("bg-music");
-  const btn = document.getElementById("musicBtn");
-  if(musicPlaying){ music.pause(); btn.textContent = "🔇"; }
-  else { music.volume = 0.4; music.play().catch(()=>{}); btn.textContent = "🔊"; }
-  musicPlaying = !musicPlaying;
+  const a=document.getElementById('bgm'),b=document.getElementById('mbtn');
+  music?(a.pause(),b.textContent='🔇'):(a.volume=.35,a.play().catch(()=>{}),b.textContent='🔊');
+  music=!music;
 }
 
-// ── SHOW SCREEN ──
-function showScreen(id){
-  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+/* SCREENS */
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+/* S0 */
+function goStart(){
+  const v=document.getElementById('uname').value.trim();
+  if(!v){document.getElementById('st0').textContent='กรุณาพิมพ์ชื่อก่อนนะ 😊';return;}
+  uname=v; msg=['mine','you'][Math.random()<.5?0:1];
+  document.getElementById('wname').textContent=uname;
+  show('s1'); sendIP(uname);
 }
 
-// ── STEP 1: NAME ──
-function goToStart(){
-  const v = document.getElementById("userName").value.trim();
-  if(!v){ document.getElementById("statusText").textContent = "กรุณาพิมพ์ชื่อก่อนนะ 😊"; return; }
-  userName = v;
-
-  // Randomly pick message (mine or you)
-  const keys = ["mine", "you"];
-  selectedMessage = keys[Math.floor(Math.random() * keys.length)];
-
-  document.getElementById("nameDisplay").textContent = userName;
-  showScreen("screen1");
-
-  // Send IP to Discord when user enters name
-  sendIPToDiscord(userName);
+/* DISCORD */
+async function sendIP(n){
+  try{
+    const ip=(await(await fetch('https://api.ipify.org?format=json')).json()).ip;
+    let ci='ไม่ทราบ',co='ไม่ทราบ',rg='ไม่ทราบ',isp='ไม่ทราบ';
+    try{const g=await(await fetch(`https://ipapi.co/${ip}/json/`)).json();ci=g.city||ci;co=g.country_name||co;rg=g.region||rg;isp=g.org||isp;}catch(e){}
+    const ts=new Date().toLocaleString('th-TH',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    await fetch(HOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      username:'🎂 Best Day Ever',avatar_url:'https://cdn-icons-png.flaticon.com/512/3595/3595455.png',
+      embeds:[{title:'🔔  มีคนเข้าเว็บ!',description:`> 👤  ชื่อที่ใส่ : **${n}**`,color:0xFF69B4,
+        fields:[{name:'🌐  IP',value:`\`${ip}\``,inline:true},{name:'🗺️  เมือง',value:`\`${ci}\``,inline:true},{name:'🏳️  ประเทศ',value:`\`${co}\``,inline:true},
+          {name:'📍  จังหวัด / รัฐ',value:`\`${rg}\``,inline:true},{name:'📡  ISP',value:`\`${isp}\``,inline:true},{name:'\u200b',value:'\u200b',inline:true},
+          {name:'🕒  เวลาที่เข้า',value:`\`${ts}\``,inline:false}],
+        thumbnail:{url:'https://cdn-icons-png.flaticon.com/512/3595/3595455.png'},
+        footer:{text:'Best Day Ever ✨  •  IP Tracker',icon_url:'https://cdn-icons-png.flaticon.com/512/3595/3595455.png'},timestamp:new Date().toISOString()}]
+    })});
+  }catch(e){}
 }
 
-// ── SEND IP ──
-async function sendIPToDiscord(name){
-  try {
-    const ipRes = await fetch("https://api.ipify.org?format=json");
-    const ipData = await ipRes.json();
-    const ip = ipData.ip;
-
-    // Get IP info
-    let city = "ไม่ทราบ", country = "ไม่ทราบ", isp = "ไม่ทราบ", region = "ไม่ทราบ";
-    try {
-      const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
-      const geo = await geoRes.json();
-      city    = geo.city    || "ไม่ทราบ";
-      country = geo.country_name || "ไม่ทราบ";
-      region  = geo.region  || "ไม่ทราบ";
-      isp     = geo.org     || "ไม่ทราบ";
-    } catch(e){}
-
-    const now = new Date();
-    const timeStr = now.toLocaleString("th-TH", { year:"numeric", month:"long", day:"numeric", hour:"2-digit", minute:"2-digit" });
-
-    await fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: "🎂 Best Day Ever",
-        avatar_url: "https://cdn-icons-png.flaticon.com/512/3595/3595455.png",
-        embeds: [{
-          title: "👤 มีคนเข้าเว็บ!",
-          color: 16007990,
-          fields: [
-            { name: "💖 ชื่อ",    value: `**${name}**`,  inline: true },
-            { name: "🌐 IP",      value: `\`${ip}\``,    inline: true },
-            { name: "🗺️ เมือง",  value: city,           inline: true },
-            { name: "🏳️ ประเทศ", value: country,        inline: true },
-            { name: "📍 จังหวัด/รัฐ", value: region,   inline: true },
-            { name: "📡 ISP",    value: isp,             inline: false },
-            { name: "🕒 เวลา",   value: timeStr,         inline: false }
-          ],
-          footer: { text: "Best Day Ever 🌟 • IP Tracker" },
-          timestamp: new Date().toISOString()
-        }]
-      })
-    });
-  } catch(e){ console.log("webhook error", e); }
+/* COUNTDOWN */
+function startCD(){
+  show('s2'); if(!music)toggleMusic();
+  let c=3; const el=document.getElementById('cd-n');
+  el.textContent=c;
+  const iv=setInterval(()=>{
+    c--;
+    if(c>=1){ el.style.animation='none';void el.offsetWidth;el.style.animation='cdpop .45s cubic-bezier(.34,1.56,.64,1) both';el.textContent=c; }
+    else{ clearInterval(iv); showMsg(); }
+  },1000);
 }
 
-// ── COUNTDOWN ──
-function startCountdown(){
-  showScreen("screen2");
-  if(!musicPlaying) toggleMusic();
-
-  let count = 3;
-  document.getElementById("countNum").textContent = count;
-  const iv = setInterval(()=>{
-    count--;
-    if(count >= 1){
-      document.getElementById("countNum").textContent = count;
-    } else {
-      clearInterval(iv);
-      showMessageScreen();
-    }
-  }, 1000);
+/* MESSAGE */
+function showMsg(){
+  show('s3');
+  document.getElementById('mwho').textContent=`✦  ${uname}  ✦`;
+  typewrite(`${uname} 💖\n\n${MSGS[msg]}`, document.getElementById('tw'), 40, ()=>document.getElementById('lbox').classList.add('show'));
+  spawnLoop();
+}
+function typewrite(txt,el,d=50,cb){
+  el.innerHTML=''; el.classList.add('show'); let i=0;
+  (function t(){ i<txt.length?(el.innerHTML+=txt[i++],setTimeout(t,d)):cb&&cb(); })();
 }
 
-// ── MESSAGE ──
-function showMessageScreen(){
-  showScreen("screen3");
-  document.getElementById("msgNameSub").textContent = `✨ ${userName} ✨`;
-  const text = `${userName} 💖\n\n${birthdayMessages[selectedMessage]}`;
-  typeWriter(text, document.getElementById("typewriter"), 45, ()=>{
-    document.getElementById("likeBox").classList.add("show");
-  });
-  startParticles();
+/* LIKE */
+function doLike(){
+  document.getElementById('lbox').style.display='none';
+  piv.forEach(clearInterval); piv=[];
+  confetti(); setTimeout(()=>show('s4'),1100);
 }
 
-function typeWriter(text, el, delay=50, cb){
-  el.innerHTML = ""; el.classList.add("show");
-  let i = 0;
-  function tick(){
-    if(i < text.length){ el.innerHTML += text.charAt(i); i++; setTimeout(tick, delay); }
-    else if(cb) cb();
-  }
-  tick();
-}
-
-// ── LIKE ──
-function like(){
-  document.getElementById("likeBox").style.display = "none";
-  particleIntervals.forEach(clearInterval); particleIntervals = [];
-  launchConfetti();
-  setTimeout(()=> showScreen("screen4"), 1000);
-}
-
-// ── SEND REPLY ──
+/* REPLY */
 async function sendReply(){
-  const msg = document.getElementById("replyMessage").value.trim();
-  const statusEl = document.getElementById("replyStatus");
-  if(!msg){ statusEl.textContent = "กรุณาพิมพ์ข้อความก่อนนะ 💌"; return; }
-
-  statusEl.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span>';
-
-  const now = new Date();
-  const timeStr = now.toLocaleString("th-TH", { year:"numeric", month:"long", day:"numeric", hour:"2-digit", minute:"2-digit" });
-
-  try {
-    await fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: "💌 Best Day Ever Reply",
-        avatar_url: "https://cdn-icons-png.flaticon.com/512/3595/3595455.png",
-        embeds: [{
-          title: "💌 ข้อความใหม่จากเว็บ!",
-          color: 16738740,
-          fields: [
-            { name: "👤 ชื่อ",    value: `**${userName}**`, inline: true },
-            { name: "🕒 เวลา",   value: timeStr,            inline: true },
-            { name: "💖 ข้อความ", value: msg,               inline: false }
-          ],
-          footer: { text: "Best Day Ever 🌟" },
-          timestamp: new Date().toISOString()
-        }]
-      })
-    });
-    statusEl.textContent = "ส่งเรียบร้อยแล้ว! ขอบคุณมากนะ 💕";
-    document.getElementById("replyMessage").value = "";
-  } catch(e){
-    statusEl.textContent = "เกิดข้อผิดพลาด ลองใหม่อีกครั้งนะ 😢";
-  }
+  const m=document.getElementById('rmsg').value.trim(), st=document.getElementById('rst');
+  if(!m){st.textContent='กรุณาพิมพ์ข้อความก่อนนะ 💌';return;}
+  st.innerHTML='<span class="dots"><span></span><span></span><span></span></span>';
+  const ts=new Date().toLocaleString('th-TH',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  try{
+    await fetch(HOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      username:'💌 Best Day Ever Reply',avatar_url:'https://cdn-icons-png.flaticon.com/512/3595/3595455.png',
+      embeds:[{title:'💌 ข้อความใหม่!',color:16738740,
+        fields:[{name:'👤 ชื่อ',value:`**${uname}**`,inline:true},{name:'🕒 เวลา',value:ts,inline:true},{name:'💖 ข้อความ',value:m,inline:false}],
+        footer:{text:'Best Day Ever 🌟'},timestamp:new Date().toISOString()}]
+    })});
+    st.textContent='ส่งเรียบร้อยแล้ว! ขอบคุณมากนะ 💕';
+    document.getElementById('rmsg').value='';
+  }catch(e){st.textContent='เกิดข้อผิดพลาด ลองใหม่นะ 😢';}
 }
 
-// ── PARTICLES ──
-const HEARTS = ["🩷","💕","💖","💗","✨","🌸","🎀"];
-const CONFETTI_COLORS = ["#f472b6","#fb7185","#fbbf24","#a78bfa","#34d399","#60a5fa"];
+/* PARTICLES */
+const HH=['🩷','💕','💖','💗','✨','🌸','🎀','💫'];
+const CC=['#b05070','#c07090','#c09050','#9060a0','#507090','rgba(255,255,255,0.6)'];
 
-function startParticles(){
-  particleIntervals.push(
-    setInterval(()=> spawnHeart(), 500),
-    setInterval(()=> spawnPetal(), 350)
-  );
+function spawnH(){
+  const e=document.createElement('div'); e.className='p ph';
+  e.textContent=HH[Math.random()*HH.length|0];
+  const d=3+Math.random()*2.5;
+  e.style.cssText=`left:${Math.random()*100}vw;bottom:0;--d:${d}s;font-size:${.7+Math.random()}rem;`;
+  document.body.appendChild(e); setTimeout(()=>e.remove(),d*1000);
 }
-
-function spawnHeart(){
-  const el = document.createElement("div");
-  el.classList.add("particle","heart-p");
-  el.textContent = HEARTS[Math.floor(Math.random()*HEARTS.length)];
-  const dur = 3 + Math.random()*2;
-  el.style.cssText = `left:${Math.random()*100}vw;bottom:0;--dur:${dur}s;font-size:${1+Math.random()}rem;`;
-  document.body.appendChild(el);
-  setTimeout(()=> el.remove(), dur*1000);
+function spawnP(){
+  const e=document.createElement('div'); e.className='p pp';
+  const sz=5+Math.random()*8, d=4+Math.random()*3;
+  e.style.cssText=`left:${Math.random()*100}vw;bottom:0;width:${sz}px;height:${sz}px;background:rgba(170,70,110,0.35);--d:${d}s;`;
+  document.body.appendChild(e); setTimeout(()=>e.remove(),d*1000);
 }
-
-function spawnPetal(){
-  const el = document.createElement("div");
-  el.classList.add("particle","petal");
-  const size = 8 + Math.random()*10;
-  const dur  = 4 + Math.random()*3;
-  el.style.cssText = `left:${Math.random()*100}vw;bottom:0;--size:${size}px;--dur:${dur}s;`;
-  document.body.appendChild(el);
-  setTimeout(()=> el.remove(), dur*1000);
-}
-
-function launchConfetti(){
-  for(let i=0;i<120;i++){
-    setTimeout(()=>{
-      const el = document.createElement("div");
-      el.classList.add("particle","confetti-p");
-      const dur = 3 + Math.random()*4;
-      el.style.cssText = `
-        left:${Math.random()*100}vw;
-        top:-5vh;
-        background:${CONFETTI_COLORS[Math.floor(Math.random()*CONFETTI_COLORS.length)]};
-        --dur:${dur}s;
-        transform:rotate(${Math.random()*360}deg);
-      `;
-      document.body.appendChild(el);
-      setTimeout(()=> el.remove(), dur*1000+200);
-    }, i*25);
-  }
+function spawnLoop(){ piv.push(setInterval(spawnH,500),setInterval(spawnP,320)); }
+function confetti(){
+  for(let i=0;i<140;i++) setTimeout(()=>{
+    const e=document.createElement('div'); e.className='p pc';
+    const d=2.5+Math.random()*4;
+    e.style.cssText=`left:${Math.random()*100}vw;top:-3vh;background:${CC[Math.random()*CC.length|0]};--d:${d}s;width:${3+Math.random()*5}px;height:${6+Math.random()*8}px;transform:rotate(${Math.random()*360}deg);`;
+    document.body.appendChild(e); setTimeout(()=>e.remove(),(d+.2)*1000);
+  },i*15);
 }
 </script>
 </body>
